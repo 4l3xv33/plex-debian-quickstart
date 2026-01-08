@@ -1,0 +1,14 @@
+services:
+  plex:
+    image: linuxserver/plex:latest
+    container_name: plex
+    network_mode: host
+    environment:
+      - TZ=America/New_York
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - ${HOME}/plex/config:/config
+      - ${HOME}/plex/transcode:/transcode
+      - ${HOME}/plex/media:/data:ro
+    restart: unless-stopped
