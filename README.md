@@ -108,3 +108,4 @@ Plex is only pointed at `media/`, never `inbox/`.
 - Requires `sudo` during initial setup
 - Docker runs Plex for portability and easy restarts
 - Metadata cleanup is intentionally manual for correctness
+- For easy cli metadata cleanup try `sudo apt install eyed3`
