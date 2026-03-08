@@ -16,7 +16,7 @@ INBOX_MUSIC := $(HOME)/plex/inbox/music
 COMPOSE := $(shell docker compose version >/dev/null 2>&1 && echo "docker compose" || echo "docker-compose")
 
 .PHONY: help setup assert-repo dirs update-apt \
-        install-ytdlp install-ffmpeg install-picard install-docker install-compose \
+        install-ytdlp install-ffmpeg install-eyed3 install-docker install-compose \
         check-docker-group docker-group \
         up stop restart status logs pull download
 
@@ -32,7 +32,7 @@ help:
 	@echo "  make download URL=...   - Download best audio -> MP3 into inbox"
 	@echo "  make docker-group       - Add current user to docker group (opt-in)"
 
-setup: assert-repo update-apt install-ytdlp install-ffmpeg install-picard install-docker install-compose check-docker-group dirs up
+setup: assert-repo update-apt install-ytdlp install-ffmpeg install-eyed3 install-docker install-compose check-docker-group dirs up
 	@echo "Setup complete."
 
 assert-repo:
@@ -70,12 +70,12 @@ install-ffmpeg:
 	  ffmpeg -version | head -n 1; \
 	fi
 
-install-picard:
-	@if command -v picard >/dev/null 2>&1; then \
-	  echo "picard already installed"; \
+install-eyed3:
+	@if command -v eyeD3 >/dev/null 2>&1; then \
+	  echo "eyeD3 already installed"; \
 	else \
-	  echo "Installing picard"; \
-	  sudo apt-get install -y picard; \
+	  echo "Installing eyed3"; \
+	  sudo apt-get install -y eyed3; \
 	fi
 
 install-docker:

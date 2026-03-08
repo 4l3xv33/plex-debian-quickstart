@@ -25,7 +25,7 @@ After setup, Plex will be available at `http://localhost:32400/web`.
 **2.** Install required tools if missing:
 - `yt-dlp` (media download)
 - `ffmpeg` (audio extraction)
-- `picard` (music metadata editing)
+- `eyeD3` (CLI music metadata editing)
 - `docker` and `docker compose`
 
 **3.** Create the required directory structure
@@ -65,15 +65,29 @@ Audio downloaded from YouTube often has:
 - missing track numbers
 - inconsistent genres
 
-Before Plex indexes anything, you should review and fix metadata using **MusicBrainz Picard**.
+Before Plex indexes anything, you should review and fix metadata using **eyeD3**.
 
 Typical workflow:
 
 **1.** Download music into `~/plex/inbox/music`
 
-**2.** Open `Picard`
+**2.** Inspect tags in the inbox (example):
 
-**3.** Fix metadata (automatic or manual)
+```bash
+eyeD3 ~/plex/inbox/music/*.mp3
+```
+
+**3.** Fix tags with `eyeD3` (example):
+
+```bash
+eyeD3 \
+  --artist "Artist Name" \
+  --album "Album Name" \
+  --title "Track Title" \
+  --track 1 \
+  --genre "Genre" \
+  ~/plex/inbox/music/song.mp3
+```
 
 **4.** Move finalized files into `~/plex/media/music`
 
@@ -108,4 +122,4 @@ Plex is only pointed at `media/`, never `inbox/`.
 - Requires `sudo` during initial setup
 - Docker runs Plex for portability and easy restarts
 - Metadata cleanup is intentionally manual for correctness
-- For easy cli metadata cleanup try `sudo apt install eyed3`
+- For easy CLI metadata cleanup: `sudo apt install eyed3`
