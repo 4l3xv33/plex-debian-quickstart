@@ -18,7 +18,7 @@ COMPOSE := $(shell docker compose version >/dev/null 2>&1 && echo "docker compos
 .PHONY: help setup assert-repo dirs update-apt \
         install-ytdlp install-ffmpeg install-eyed3 install-docker install-compose \
         check-docker-group docker-group \
-        up stop restart status logs pull download
+        up stop restart status logs pull scan download
 
 help:
 	@echo "Targets:"
@@ -29,6 +29,7 @@ help:
 	@echo "  make status             - Show container status"
 	@echo "  make logs               - Tail Plex logs"
 	@echo "  make pull               - Pull latest container images"
+	@echo "  make scan               - Trigger Plex library scan"
 	@echo "  make download URL=...   - Download best audio -> MP3 into inbox"
 	@echo "  make docker-group       - Add current user to docker group (opt-in)"
 
@@ -137,6 +138,10 @@ logs:
 
 pull:
 	$(COMPOSE) pull
+
+scan:
+	curl -fsS "http://localhost:32400/library/sections/all/refresh"
+	@echo "Triggered Plex library scan."
 
 # Download best audio -> MP3 into inbox
 # Usage: make download URL="https://www.youtube.com/watch?v=..."
